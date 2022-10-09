@@ -1,3 +1,4 @@
+require('dotenv').config()      //Obtener variables de entorno del archivo .env
 const express = require('express')
 const fs = require('fs');
 const http = require('http');

@@ -30,6 +30,7 @@ router.get('/processStepRelation/idProcess/:idProcess', processStepRelationContr
 
 router.post('/processFormData', processFormDataController.createProcessFormData)
 router.post('/processFormImages', processFormDataController.createProcessFormImages)
-router.get('/processFormData', processFormDataController.getProcessFormData)
+router.get('/processFormData', processFormDataController.getProcessesFormData)
+router.get('/processFormData/:idProcessData', processFormDataController.getProcessFormData)
 
 module.exports = router

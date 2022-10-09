@@ -11,7 +11,8 @@ const createProcessFormData = async (req, res) => {
     fieldsProperties.forEach(step => {
         step.fieldsProperties.forEach(stepField => {
             if(stepField.fieldType == "file" && stepField.fieldValue !== ""){
-                stepField.fieldValue = 'localhost:3000/images/' + stepField.fieldValue
+                //stepField.fieldValue = 'http://localhost:3000/images/' + stepField.fieldValue
+                stepField.fieldValue = process.env.API_URL + `/images/${stepField.fieldValue}`
             }
         })
     })
@@ -35,7 +36,7 @@ const createProcessFormImages = async (req, res) => {
     res.json({'message': 'create process form images'});
 }
 
-const getProcessFormData = async (req, res) => {
+const getProcessesFormData = async (req, res) => {
     const columns = 'PD.id, fields_properties, id_process, name AS process_name, description'
     const response = await pool.query(`SELECT ${columns} FROM sp_process_data PD 
         INNER JOIN sp_process P ON PD.id_process = P.id
@@ -43,8 +44,18 @@ const getProcessFormData = async (req, res) => {
     res.json(response.rows);
 }
 
+const getProcessFormData = async (req, res) => {
+    const id = req.params.idProcessData
+    const columns = 'PD.id, fields_properties, name AS process_name'
+    const response = await pool.query(`SELECT ${columns} FROM sp_process_data PD 
+        INNER JOIN sp_process P ON PD.id_process = P.id
+        WHERE PD.id = ${id}`);
+    res.json(response.rows[0]);
+}
+
 module.exports = {
     createProcessFormData,
     createProcessFormImages,
+    getProcessesFormData,
     getProcessFormData
 }
