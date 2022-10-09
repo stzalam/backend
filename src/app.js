@@ -8,8 +8,8 @@ const multer = require('multer')
 
 
 const httpsServerOptions = {
-    key:  fs.readFileSync("C:\\Users\\Dev\\Documents\\GitHub\\backend\\src\\certificado_desarrollo\\prueba-privateKey.key"),
-    cert: fs.readFileSync("C:\\Users\\Dev\\Documents\\GitHub\\backend\\src\\certificado_desarrollo\\prueba.crt")
+    key:  fs.readFileSync("/etc/letsencrypt/live/api-workflow.com/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/api-workflow.com/fullchain.pem")
 };
 
 
@@ -17,11 +17,11 @@ const path = require('path')
 
 const app = express()
 const server = http.createServer(app);
-server.listen('3000','127.0.0.1');
+server.listen('80','172.26.1.27');
 
 
 const serverHttps = https.createServer(httpsServerOptions, app);
-serverHttps.listen('443','127.0.0.1');
+serverHttps.listen('443','172.26.1.27');
 
 app.use((req, res, next) => {
     if (req.secure) next(); else res.redirect(`https://${req.headers.host}${req.url}`);
