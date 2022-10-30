@@ -32,5 +32,7 @@ router.post('/processFormData', processFormDataController.createProcessFormData)
 router.post('/processFormImages', processFormDataController.createProcessFormImages)
 router.get('/processFormData', processFormDataController.getProcessesFormData)
 router.get('/processFormData/:idProcessData', processFormDataController.getProcessFormData)
+router.get('/processFormData-count', processFormDataController.getCountProcessFormData)
+router.put('/processFormData/:idProcessData', processFormDataController.updateProcessFormData)
 
 module.exports = router

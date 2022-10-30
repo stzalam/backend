@@ -53,9 +53,30 @@ const getProcessFormData = async (req, res) => {
     res.json(response.rows[0]);
 }
 
+const getCountProcessFormData = async (req, res) => {
+    const columns = 'PD.id_process, P.name, COUNT(*) AS total'
+    const response = await pool.query(`SELECT ${columns} FROM sp_process_data PD 
+        INNER JOIN sp_process P ON PD.id_process = P.id
+        GROUP BY PD.id_process, P.name`);
+
+    res.json(response.rows);
+    console.log(response.rows)
+}
+
+const updateProcessFormData = async(req, res) => {
+    const id = req.params.idProcessData
+    const {fieldsProperties} = req.body
+    const columns = 'fields_properties=$1'
+    const data = [JSON.stringify(fieldsProperties)]
+    await pool.query('UPDATE sp_process_data SET ' + columns + `WHERE id=${id}`, data)
+    res.json({message: 'update process data'})
+}
+
 module.exports = {
     createProcessFormData,
     createProcessFormImages,
     getProcessesFormData,
-    getProcessFormData
+    getProcessFormData,
+    getCountProcessFormData,
+    updateProcessFormData
 }
