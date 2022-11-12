@@ -12,7 +12,8 @@ const createProcessFormData = async (req, res) => {
         step.fieldsProperties.forEach(stepField => {
             if(stepField.fieldType == "file" && stepField.fieldValue !== ""){
                 //stepField.fieldValue = 'http://localhost:3000/images/' + stepField.fieldValue
-                stepField.fieldValue = process.env.API_URL + `/images/${stepField.fieldValue}`
+                //stepField.fieldValue = process.env.API_URL + `/images/${stepField.fieldValue}`
+                stepField.fieldValue = 'https://api-workflow.com/images/' + stepField.fieldValue
             }
         })
     })
